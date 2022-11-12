@@ -71,16 +71,26 @@
                 <section>
                     <h2><a href="https://github.com/parlance-zz/g-diffuser-bot">Git-hub Project / Download</a></h2>
                     <p>
-                        Under Construction - Please use the above link for project information and download / installation instructions
+                        Project information and download links are available <a href="https://github.com/parlance-zz/g-diffuser-bot">here</a>
                     </p>
                     <p>
-                        Below are examples of out-painting made using the g-diffuser-bot; the original image is on the left and the
-                        expanded / out-painted image is on the right. The complete pipeline / stack used is as follows:
-                        <ul>
-                            <li>RunwayML SD1.5 w/in-painting u-net and upgraded VAE</li>
-                            <li>Latent space fourier shaped noise</li>
-                            <li>CLIP guidance w/tokens taken from CLIP interrogation on unmasked source image</li>
-                        </ul>
+                        <div class="row" style="padding:0%">
+                            <div class="column">
+                                <p>
+                                    Below are examples of out-painting images made using the g-diffuser-bot; the original image is on the left and the
+                                    expanded / out-painted image is on the right.
+                                </p>
+                                The complete pipeline / stack used is as follows:                            
+                                <ul>
+                                    <li>RunwayML SD1.5 w/in-painting u-net and upgraded VAE</li>
+                                    <li>Latent space fourier shaped noise</li>
+                                    <li>CLIP guidance w/tokens taken from CLIP interrogation on unmasked source image</li>
+                                </ul>
+                                CLIP interrogation is the only part of the process that is currently not automatic / integrated, but it
+                                is my intention to integrate it into the bot directly in the near future.
+                            </div>
+                            <div class="column" style="padding:0%; "><img src="discord_screenshot.JPG"/></div>
+                        </div>
                     </p>
                     <p>
                         <div id="galleryContent"></div>                    
