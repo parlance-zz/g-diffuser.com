@@ -41,7 +41,9 @@
         }
 
     </style>
+    <script src="jquery.js"></script> 
     <title>G-Diffuser - Discord bot and Interface for Stable Diffusion</title>
+
 </head>
 
 <!-- Google tag (gtag.js) -->
@@ -72,23 +74,7 @@
                         Under Construction - Please use the above link for project information and download / installation instructions
                     </p>
                     <p>
-                    <div class="row">
-                        <div class="column" style="width: 51%"><img src="gallery/balloons_0.jpg"/></div>
-                        <div class="column"><img src="gallery/balloons_1.jpg"/></div>
-                    </div>
-                    <div class="row">
-                        <div class="column" style="width: 51%"><img src="gallery/balloons_0.jpg"/></div>
-                        <div class="column"><img src="gallery/balloons_2.jpg"/></div>
-                    </div>
-                    
-                    <div class="row">
-                        <div class="column" style="width: 51%"><img src="gallery/electric_0.jpg"/></div>
-                        <div class="column"><img src="gallery/electric_1.jpg"/></div>
-                    </div>
-                    <div class="row">
-                        <div class="column" style="width: 51%"><img src="gallery/electric_0.jpg"/></div>
-                        <div class="column"><img src="gallery/electric_2.jpg"/></div>
-                    </div>                      
+                        <div id="galleryContent"></div>                    
                     </p>
                     <p>
                         <a href="https://www.stablecabal.org">
@@ -101,5 +87,11 @@
     </div>
 
 </body>
+
+<script> 
+    $(document).ready(function() {
+        $('#galleryContent').load('gallery.html');
+    });
+</script> 
 
 </html>
