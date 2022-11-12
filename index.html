@@ -10,12 +10,12 @@
     <style>
         body {
             font-family: 'Barlow', serif;
-            /*background-color: #222;
-            color: white;*/
+            background-color: #222;
+            color: white;
         }
 
         header {
-            background-image: url("banner.png");
+            background-image: url("banner.jpg");
             background-position: center 70%;
             background-repeat: no-repeat;
             background-size: cover;
@@ -26,7 +26,6 @@
             margin-bottom: 2rem;
         }
 
-        /* Style customization */
         h1 {
             filter: drop-shadow(0 0 8px black);
             font-size: 10rem;
@@ -35,6 +34,12 @@
             color: violet;
         }
         
+        .gallery {
+            object-fit: scale-down;
+            /*width: 100%;*/
+            /*height: 250px; */
+        }
+
     </style>
     <title>G-Diffuser - Discord bot and Interface for Stable Diffusion</title>
 </head>
@@ -67,15 +72,30 @@
                         Under Construction - Please use the above link for project information and download / installation instructions
                     </p>
                     <p>
-                        Demo gallery coming soon!
+                    <div class="row">
+                        <div class="column" style="width: 51%"><img src="gallery/balloons_0.jpg"/></div>
+                        <div class="column"><img src="gallery/balloons_1.jpg"/></div>
+                    </div>
+                    <div class="row">
+                        <div class="column" style="width: 51%"><img src="gallery/balloons_0.jpg"/></div>
+                        <div class="column"><img src="gallery/balloons_2.jpg"/></div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="column" style="width: 51%"><img src="gallery/electric_0.jpg"/></div>
+                        <div class="column"><img src="gallery/electric_1.jpg"/></div>
+                    </div>
+                    <div class="row">
+                        <div class="column" style="width: 51%"><img src="gallery/electric_0.jpg"/></div>
+                        <div class="column"><img src="gallery/electric_2.jpg"/></div>
+                    </div>                      
                     </p>
                     <p>
                         <a href="https://www.stablecabal.org">
-                        <img src="https://www.stablecabal.org/stablecabal.png"/>
+                        <img src="stablecabal.png"/>
                         </a>
                     </p>
                 </section>
-
             </div>
         </div>
     </div>
