@@ -55,15 +55,16 @@ for set_name, file in original_filenames.items():
 
 template_string = """
 <div class="row" style="padding:0%">
-    <div class="column" style="width: 50%; padding:0%"><img src="{0}"/></div>
-    <div class="column" style="padding:0%; "><img src="{1}"/></div>
+    <div class="column" style="width: {0}%; padding:0%"><img src="{1}"/></div>
+    <div class="column" style="padding:0%; "><img src="{2}"/></div>
 </div>
 """
 
 html_str = ""
 for set_name, files in gallery_filenames.items():
     for file in files:
-        html_str += template_string.format(original_filenames[set_name], file)
+        width_ratio = 100 * Image.open(original_filenames[set_name]).size[0] / Image.open(file).size[0]
+        html_str += template_string.format(width_ratio, original_filenames[set_name], file)
 
 with open("gallery.html", "w") as f:
     f.write(html_str)
