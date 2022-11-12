@@ -2,6 +2,8 @@ import os, glob
 from PIL import Image
 from PIL import ImageOps
 
+JPG_QUALITY = 90
+
 files = glob.glob('gallery/*')
 
 set_min_dims = {}
@@ -11,8 +13,17 @@ gallery_filenames = {}
 for file in files:
     
     basename = os.path.splitext(os.path.basename(file))[0]
+    extension = os.path.splitext(file)[1].lower()
     set_name = basename.split("_")[0]
     set_index = int(basename.split("_")[1])
+
+    if extension != ".jpg":
+        new_file = os.path.splitext(file)[0] + ".jpg"
+        print("Converting ", file, " to ", new_file, "...")
+        Image.open(file).save(new_file, quality=JPG_QUALITY)
+        print("Removing ", file, "...")
+        os.remove(file)
+        file = new_file
 
     if set_index == 0:
         original_filenames[set_name] = file
@@ -30,12 +41,17 @@ for set_name, file in original_filenames.items():
     min_dims = set_min_dims[set_name]
     image = Image.open(file)
     width, height = image.size
-    min_width = min(width, min_dims[0]); min_height = min(height, min_dims[1])
+    
+    need_resize = False
+    if min_dims[0] < min_dims[1]:
+        if width != min_dims[0]: need_resize = True
+    else:
+        if height != min_dims[1]: need_resize = True
 
     print(set_name, file, "dims: " + str((width, height)),"min_dims: " + str(min_dims))
-    if (width, height) != (min_width, min_height):
+    if need_resize:
         print("resizing from ", (width, height), "to", min_dims, "...")
-        ImageOps.contain(image, min_dims, method=Image.Resampling.LANCZOS).save(file, quality=90)
+        ImageOps.contain(image, min_dims, method=Image.Resampling.LANCZOS).save(file, quality=JPG_QUALITY)
 
 template_string = """
 <div class="row" style="padding:0%">
