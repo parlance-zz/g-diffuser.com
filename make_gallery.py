@@ -56,7 +56,7 @@ for set_name, file in original_filenames.items():
 template_string = """
 <div class="row" style="padding:0%">
     <div class="column" style="width: {0}%; padding:0%"><img src="{1}"/></div>
-    <div class="column" style="padding:0%; "><img src="{2}"/></div>
+    <div class="column" style="padding-top:0%; padding-bottom:0%;"><img src="{2}"/></div>
 </div>
 """
 
