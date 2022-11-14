@@ -20,7 +20,7 @@ for file in files:
     if extension != ".jpg":
         new_file = os.path.splitext(file)[0] + ".jpg"
         print("Converting ", file, " to ", new_file, "...")
-        Image.open(file).save(new_file, quality=JPG_QUALITY)
+        Image.open(file).convert('RGB').save(new_file, quality=JPG_QUALITY)
         print("Removing ", file, "...")
         os.remove(file)
         file = new_file
@@ -51,7 +51,7 @@ for set_name, file in original_filenames.items():
     print(set_name, file, "dims: " + str((width, height)),"min_dims: " + str(min_dims))
     if need_resize:
         print("resizing from ", (width, height), "to", min_dims, "...")
-        ImageOps.contain(image, min_dims, method=Image.Resampling.LANCZOS).save(file, quality=JPG_QUALITY)
+        ImageOps.contain(image, min_dims, method=Image.Resampling.LANCZOS).convert('RGB').save(file, quality=JPG_QUALITY, format="")
 
 template_string = """
 <div class="row" style="padding:0%">
