@@ -1020,3 +1020,23 @@ template {
   }
 /* *********************************************** */
 
+.audio-caption {
+
+
+  width: 500px; 
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 10px; /* Space between caption and audio player */
+  margin-bottom: 0; 
+  line-height: 1; 
+
+  font-weight: 300;
+  letter-spacing: -.02rem;
+  margin-bottom: 0.0rem;
+  margin-top: 0;
+  font-size:larger
+}
+
+audio {
+  vertical-align: middle;
+}
