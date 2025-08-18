@@ -1040,3 +1040,35 @@ template {
 audio {
   vertical-align: middle;
 }
+
+.text-backdrop {
+  position: relative;
+  display: inline-block;
+  z-index: 1;
+}
+
+.text-backdrop::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  /* Just a bit bigger than the text */
+  width: 200%;
+  height: 120%;
+
+  /* Keep it oval-ish to cover top/bottom fully */
+  border-radius: 10%;
+
+  background: radial-gradient(
+    circle,
+    rgba(0, 0, 0, 0.95) 0%,
+    rgba(0, 0, 0, 0.75) 25%,
+    rgba(0, 0, 0, 0.4) 55%,
+    rgba(0, 0, 0, 0) 90%
+  );
+
+  filter: blur(10px);   /* soften edges */
+  z-index: -1;
+}
