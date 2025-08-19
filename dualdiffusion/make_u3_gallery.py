@@ -21,7 +21,7 @@ def get_step_count(file: str) -> int:
     end = file.find("_", start)
     return file[start:end] if end != -1 else file[start:]
 
-url_prefix = f"/{source}/"
+url_prefix = f"{os.path.basename(source)}/"
 cat_dirs = sorted(os.listdir(source), key=lambda x: int(x.split("_")[0]))
 categories = []
 total_samples = 0
@@ -29,6 +29,27 @@ total_samples = 0
 for cat_dir in cat_dirs:
 
     samples = [s for s in os.listdir(os.path.join(source, cat_dir)) if s.endswith(".flac")]
+
+    # sanitize file names
+    for i, sample in enumerate(samples):
+        
+        if "step_" in sample:
+            new_sample = sample[sample.index("step_"):]
+        else:
+            raise ValueError(f"Sample '{sample}' does not contain 'step_'")
+        
+        parts = new_sample.split("_")
+        if len(parts) > 3:
+            parts = parts[:2] + parts[-1:]
+            new_sample = "_".join(parts)
+        
+        if new_sample != sample:
+            old_path = os.path.join(source, cat_dir, sample)
+            new_path = os.path.join(source, cat_dir, new_sample)
+            print(f"Renaming: '{old_path}' -> '{new_path}'")
+            os.rename(old_path, new_path)
+            samples[i] = new_sample
+    
     samples = sorted(samples, key=lambda s: int(get_step_count(s)), reverse=True)
     samples = [(get_step_count(s) + " steps", normalize_url(os.path.join(url_prefix, cat_dir, s))) for s in samples]
     total_samples += len(samples)
