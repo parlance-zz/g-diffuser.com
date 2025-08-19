@@ -1056,7 +1056,7 @@ audio {
 
   /* Just a bit bigger than the text */
   width: 200%;
-  height: 120%;
+  height: 150%;
 
   /* Keep it oval-ish to cover top/bottom fully */
   border-radius: 10%;
@@ -1072,3 +1072,81 @@ audio {
   filter: blur(10px);   /* soften edges */
   z-index: -1;
 }
+
+@media (max-width: 480px) {
+  .text-backdrop::before {
+    width: 120%;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 500px) {
+  .text-backdrop::before {
+    width: 80%;
+  }
+}
+
+.github-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #24292e;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 6px;
+  /*font-family: sans-serif; */
+  font-size: 14px;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.github-btn:hover {
+  background-color: #30363c; /* lighter on hover */
+  color: white;
+}
+
+.github-icon {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  filter: brightness(0) invert(1); /* ensures it stays white */
+}
+
+.sample_category_box {
+  border: 2px solid #1d1a1d;   /* outer border */
+  border-radius: 8px;       /* optional rounded corners */
+  overflow: hidden;         /* ensures inner borders don’t “stick out” */
+  margin-top: 10px;
+}
+
+.sample_category_description {
+  /* border-bottom: 1px solid #ccc;  /* separator line */ 
+  /* padding: 0px 0px 0px 0px; /* padding for each row */
+  background-color: #1d1a1d; /* dark background for the description */
+  margin: 0;
+  padding: 12px;
+  
+  /*
+  width: 100%;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  */
+}
+
+.sample_row {
+  /* border-bottom: 1px solid #ccc;  /* separator line */ 
+  padding: 8px 0px 0px 0px; /* padding for each row */
+  height: 70px;
+  left: 10%;
+  /*
+  width: 100%;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  */
+}
+
+.sample_row:nth-child(odd) {
+  background-color: #262626;
+}
+

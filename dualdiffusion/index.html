@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <link rel="icon" type="image/png" href="../favicon.png">
-    <meta name="viewport" content="width=800">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DualDiffusion Demo Audio</title>
     <meta property="og:title" content="DualDiffusion Demo Audio"/>
     <meta name="description" content="DualDiffusion Demo Audio">
@@ -18,11 +18,18 @@
     <meta name="author" content="Christopher Friesen">
 
     <link rel="stylesheet" href="../css.css">
+    <link rel="stylesheet" href="gallery_responsive.css">
     <style>
         body {
             font-family: 'Barlow', serif;
             background-color: #222;
             color: white;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            overflow-x: hidden;
+            box-sizing: border-box;
+            max-width: 100vw;
         }
         header {
             background-image: url("../banner.jpg");
@@ -34,6 +41,12 @@
             flex-direction: column;
             justify-content: center;
             margin-bottom: 2rem;
+            width: 100vw;
+            max-width: 100%;
+            left: 0;
+            right: 0;
+            position: relative;
+            box-sizing: border-box;
         }
         h1 {
             text-shadow: 0px 0px 4px rgba(0,0,0,1);
@@ -49,9 +62,205 @@
             text-align: center;
             align-items: center; 
         }
+        
+        .audio-caption {
+            text-align: center;
+        }
+        
+        /* Responsive styles */
+        .container {
+            width: 100%;
+            max-width: 112.0rem;
+            margin: 0 auto;
+            padding: 0 2.0rem;
+            box-sizing: border-box;
+        }
+        
+        /* Fix for audio elements and sample rows */
+        audio {
+            max-width: 100%;
+        }
+        
+        .sample_row {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        @media (min-width: 768px) {
+            .sample_row {
+                flex-direction: row;
+                align-items: center;
+            }
+        }
+        
+        /* Mobile-specific styles */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 4.5rem;
+            }
+            h2 {
+                font-size: 2rem;
+            }
+            .container {
+                padding: 0 1rem;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            header {
+                height: 200px;
+            }
+            .sample_category_box {
+                width: 100%;
+                box-sizing: border-box;
+                margin: 10px 0;
+            }
+            .audio-caption {
+                width: 100%;
+                max-width: none;
+                margin-bottom: 8px;
+            }
+        }
+        
+        /* Small mobile styles */
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 3.5rem;
+            }
+            .github-btn {
+                font-size: 12px;
+                padding: 4px 8px;
+            }
+            audio {
+                width: 100%;
+                margin-top: 10px;
+            }
+            .audio-caption {
+                width: 100%;
+                display: block;
+                margin-bottom: 5px;
+                text-align: center;
+            }
+            .sample_row {
+                height: auto;
+                padding: 10px;
+            }
+        }
+        
+        /* Fix for text-backdrop display in all modes */
+        header .text-backdrop {
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Landscape mode styles */
+        @media (orientation: landscape) and (max-height: 500px) {
+            body {
+                width: 100vw;
+                overflow-x: hidden;
+            }
+            header {
+                width: 100vw;
+                height: 160px; /* Shorter header for landscape */
+                background-size: 100% auto;
+            }
+            h1 {
+                font-size: 3.8rem;
+                display: block;
+                width: 100%;
+            }
+            h2 {
+                font-size: 1.8rem;
+                display: block;
+                width: 100%;
+            }
+            header .text-backdrop {
+                display: block;
+                width: 100%;
+                margin: 0;
+                text-align: center;
+            }
+            header .container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                height: 100%;
+                padding-top: 10px;
+                padding-bottom: 10px;
+                text-align: center;
+            }
+            header h1 {
+                margin: 0 0 10px 0;
+                line-height: 1;
+                text-align: center;
+                width: 100%;
+                padding: 0 10px;
+            }
+            header h2 {
+                margin: 0;
+                line-height: 1.2;
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+                width: 100%;
+                text-align: center;
+                padding: 0 10px;
+            }
+            .header-text {
+                display: inline-block;
+                margin-right: 10px;
+                text-align: center;
+                font-size: 1.8rem;
+                font-weight: 500;
+            }
+            
+            .github-btn {
+                margin-top: 5px;
+                vertical-align: middle;
+                display: inline-block;
+                font-size: 1.4rem;
+                padding: 6px 12px;
+            }
+            .container {
+                width: 100%;
+                max-width: none;
+                padding: 0 10px;
+                box-sizing: border-box;
+            }
+            audio {
+                width: 100%;
+                max-width: 100%;
+                height: 30px;
+            }
+            .audio-caption {
+                width: 100%;
+                max-width: none;
+                margin-bottom: 5px;
+                font-size: 0.9em;
+                text-align: center;
+            }
+            /* Ensure audio elements don't overflow */
+            figure {
+                width: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            /* Fix for gallery rows in landscape */
+            #snes_galleryContent .row, 
+            #u3_galleryContent .row {
+                margin: 0;
+                padding: 5px 0;
+                width: 100%;
+                box-sizing: border-box;
+                display: flex;
+                flex-direction: column;
+            }
+        }
     </style>
 
-    <script src="jquery.js"></script>
+    <script src="../jquery.js"></script>
 </head>
 
 <!-- Google tag (gtag.js) -->
@@ -68,7 +277,10 @@
         <div class="container white">
             <h1 class="text-backdrop">Dual Diffusion</h1>
             <h2 class="text-backdrop">
-                Video Game Music Diffusion Model 
+                <span class="header-text">Video Game Music Diffusion Model</span>
+                <a href="https://github.com/parlance-zz/dualdiffusion" target="_blank" class="github-btn">
+                    <img src="../github_logo.svg" class="github-icon"/>Code
+                </a>
             </h2>
         </div>
     </header>
@@ -80,7 +292,7 @@
                         <div class="row" style="padding:0%">
                             <div class="column">
                                 <p>
-                                    DualDiffusion is a generative diffusion model for video game music. The model is still a work in progress. More information about the project and full source code is available <a href="https://github.com/parlance-zz/dualdiffusion" target="_blank">here</a>.
+                                    DualDiffusion is a generative diffusion model for video game music. The model is still a work in progress. More information about the project and full source code is available on <a href="https://github.com/parlance-zz/dualdiffusion" target="_blank">github</a>.
                                 </p>
                                 <p>
                                     The most recent model (U3) has 500m parameters in the music diffusion model, 25m in the auto-encoder and 15m in the diffusion decoder.
@@ -88,8 +300,8 @@
                                     with the model's performance and will be continuing development until I feel I have something worth releasing publicly.
                                 </p>
                                     The model is conditioned on <a href="https://github.com/LAION-AI/CLAP" target="_blank">CLAP</a> audio embeddings and is designed to be used with example audio.
-                                    The training data consists of video game music from the mid-90s to present day. While this dataset is substantially larger than the SNES dataset,
-                                    it includes a substantial number of tracks with poor audio quality / codecs (Sega Saturn, PS1, etc). As a result, the audio quality of generated
+                                    The training data consists of video game music from the mid-90s to present day. While this dataset is substantially larger (570k) than the SNES dataset (20k),
+                                    it includes a substantial number of tracks with poor audio quality / codecs (Sega Saturn, PS1, etc). As a result the audio quality of generated
                                     samples can vary from phono-realistic to 96kbps WMA. A small minority of the tracks in the dataset contain vocals, but the model was not conditioned
                                     with lyrics or transcriptions. Although you might occasionally hear intelligible words or phrases, most tracks with vocals tend to sound like <a href="https://en.wikipedia.org/wiki/Simlish" target="_blank">simlish</a>.
                                 </p>
@@ -102,7 +314,6 @@
                                 </p>
                                 <p>
                                     Below are samples generated by the U3 model throughout the course of training.
-                                    The numbers in brackets indicate the number of training steps when that sample was generated.
                                     The tracks marked U2 were generated by the previous model which was only trained to 130k steps.
                                 </p>
                             </div>
@@ -113,7 +324,7 @@
                         <div id="u3_galleryContent"></div>
                     </p>
                     
-                    <p>
+                    <p style="margin-top: 60px;">
                         <div class="row" style="padding:0%">
                             <div class="column">
                                 <p>
@@ -127,7 +338,7 @@
                             </div>
                         </div>
                     </p>
-                    
+
                     <p>
                         <div id="snes_galleryContent"></div>
                     </p>
@@ -143,19 +354,36 @@
 </body>
 
 <script> 
-    fetch('snes_gallery.html')
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById('snes_galleryContent').innerHTML = data;
-        })
-        .catch(error => console.error('Error loading the HTML file:', error));
+    // Function to safely load gallery content
+    function loadGalleryContent(galleryUrl, targetElementId) {
+        fetch(galleryUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.text();
+            })
+            .then(data => {
+                const targetElement = document.getElementById(targetElementId);
+                if (targetElement) {
+                    targetElement.innerHTML = data;
+                    
+                    // Apply responsive styles to audio elements
+                    const audioElements = targetElement.querySelectorAll('audio');
+                    audioElements.forEach(audio => {
+                        audio.style.maxWidth = '100%';
+                        audio.setAttribute('controlsList', 'nodownload');
+                    });
+                }
+            })
+            .catch(error => console.error(`Error loading ${galleryUrl}:`, error));
+    }
 
-    fetch('u3_gallery.html')
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById('u3_galleryContent').innerHTML = data;
-        })
-        .catch(error => console.error('Error loading the HTML file:', error));
+    // Load gallery contents
+    document.addEventListener('DOMContentLoaded', function() {
+        loadGalleryContent('snes_gallery.html', 'snes_galleryContent');
+        loadGalleryContent('u3_gallery.html', 'u3_galleryContent');
+    });
 </script> 
 
 </html>

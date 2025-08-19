@@ -1,9 +1,9 @@
-import os, glob
+import os
 
 from urllib.parse import urlparse, urlunparse
 
 
-source = "dualdiffusion/u3_gallery/**"
+source = "dualdiffusion/u3_gallery"
 dest = "dualdiffusion/u3_gallery.html"
 
 
@@ -13,70 +13,73 @@ def normalize_url(url: str) -> str:
         scheme=parsed_url.scheme.lower(),
         netloc=parsed_url.netloc.lower(),
     )
-    return urlunparse(normalized_url)
+    return urlunparse(normalized_url).replace("\\", "/")
 
 def get_step_count(file: str) -> int:
     prefix = "step_"
     start = file.index(prefix) + len(prefix)
     end = file.find("_", start)
     return file[start:end] if end != -1 else file[start:]
-    
-files = glob.glob(source, recursive=True)
 
-gallery = {}
-label_counts = {}
+url_prefix = f"/{source}/"
+cat_dirs = sorted(os.listdir(source), key=lambda x: int(x.split("_")[0]))
+categories = []
+total_samples = 0
 
-for file in sorted(files):
-    if not os.path.isfile(file) or not os.path.splitext(file)[1].lower() == ".flac":
-        continue
-    
-    if " " in os.path.basename(file):
-        new_file = os.path.basename(file).replace(" ", "_")
-        new_file = os.path.join(os.path.dirname(file), new_file)
-        os.rename(file, new_file)
-        file = new_file
+for cat_dir in cat_dirs:
 
-    name = os.path.basename(os.path.dirname(file)).replace("_", " ")
-    step_count = get_step_count(os.path.basename(file))
+    samples = [s for s in os.listdir(os.path.join(source, cat_dir)) if s.endswith(".flac")]
+    samples = sorted(samples, key=lambda s: int(get_step_count(s)), reverse=True)
+    samples = [(get_step_count(s) + " steps", normalize_url(os.path.join(url_prefix, cat_dir, s))) for s in samples]
+    total_samples += len(samples)
 
-    if name not in label_counts:
-        label_counts[name] = 1
+    cat_name = " ".join(cat_dir.split("_")[1:])
+    desc_file = os.path.join(source, cat_dir, "description.txt")
+    if os.path.isfile(desc_file):
+        with open(desc_file, "r") as f:
+            cat_description = f.read().strip()
     else:
-        label_counts[name] += 1
-    
-    name += f" {label_counts[name]} ({step_count})"
-    gallery[name] = os.path.relpath(file, "dualdiffusion/").replace("\\", "/")
+        cat_description = ""
+    categories.append((cat_name, cat_description, cat_dir, samples))
 
-print(len(gallery), "file(s) found\n")
+print(f"Total categories: {len(categories)}", f"Total samples: {total_samples}\n")
 
-gallery = {
-    k.split(" ", 1)[1]: v
-    for k, v in sorted(
-        gallery.items(),
-        key=lambda item: (
-            int(item[0].split(" ")[0]),                          # primary sort
-            -int(item[0].rsplit("(", 1)[1].rstrip(")"))          # secondary sort (descending)
-        )
-    )
-}
+for cat_name, cat_description, cat_dir, samples in categories:
+    print(f"Category: '{cat_name}'", f"Dir: '{cat_dir}'", f"Num Samples: {len(samples)}")
+    for label, url in samples:
+        print(f"  Label: '{label}'", f"URL: '{url}'")
+    print("")
 
-for k, v in gallery.items():
-    print("key:", k, "val:", v)
+cat_start_template_description = """
+<div class="sample_category_box">
+    <h4 class="sample_category_description" style="color: violet;">{0}</h4>
+    <p class="row sample_category_description" style="padding: 12px">{1}</p>
+"""
+cat_start_template_no_description = """
+<div class="sample_category_box">
+    <h4 class="sample_category_description" style="color: violet;">{0}</h4>
+"""
+sample_template = """
+    <div class="row sample_row">
+        <figure><figcaption class="audio-caption">{0}</figcaption></figure>
+        <audio controls preload="none" src="{1}"></audio>
+        </figure>
+    </div>
+"""
 
-#exit()
-
-template_string = """
-<div class="row" style="padding:0%">
-    <figure><figcaption class="audio-caption">{0}</figcaption></figure>
-    <audio controls preload="none" src="{1}"></audio>
-    </figure>
+cat_end_template = """
 </div>
 """
 
 html_str = ""
-for name, file in gallery.items():
-    print(name, file)
-    html_str += template_string.format(name, file)
+
+for cat_name, cat_description, cat_dir, samples in categories:
+
+    cat_start_template = cat_start_template_no_description if not cat_description else cat_start_template_description
+    html_str += cat_start_template.format(cat_name, cat_description)
+    for label, url in samples:
+        html_str += sample_template.format(label, url)
+    html_str += cat_end_template
 
 with open(dest, "w") as f:
     f.write(html_str)
