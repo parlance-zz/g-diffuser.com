@@ -61,8 +61,9 @@ cat_start_template_no_description = """
 """
 sample_template = """
     <div class="row sample_row">
-        <figure><figcaption class="audio-caption">{0}</figcaption></figure>
-        <audio controls preload="none" src="{1}"></audio>
+        <figure>
+            <figcaption class="audio-caption">{0}</figcaption>
+            <audio controls preload="none" src="{1}"></audio>
         </figure>
     </div>
 """
