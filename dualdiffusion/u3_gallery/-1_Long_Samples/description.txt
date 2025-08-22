@@ -1,0 +1,2 @@
+I began the process of training the model on larger sections at 460k steps to get better whole-song coherence.
+<br/>Small quality degradation while the model adapts to the new length but promising results so far.
